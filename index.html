@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kalkulator dengan Login</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- HALAMAN 1: FORM LOGIN -->
+    <div id="pageLogin" class="login-container">
+      <div class="card login-card">
+        <h2>Login Team Online</h2>
+        <p class="login-sub">Masukkan akun untuk mengakses kalkulator</p>
+
+        <form id="formLogin">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              placeholder="Masukkan username"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Masukkan password"
+              required
+            />
+          </div>
+          <p id="loginError" class="error-text"></p>
+          <button type="submit" class="btn-primary">Masuk</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- HALAMAN 2: KALKULATOR (Hidden by default) -->
+    <div id="pageKalkulator" class="container hidden">
+      <header class="header header-flex">
+        <div>
+          <h1>Kalkulator Cano Divisi Online</h1>
+          <p>Perhitungan Imposisi Area Cetak 31 x 46 cm</p>
+        </div>
+        <button type="button" id="btnLogout" class="btn-logout">Logout</button>
+      </header>
+
+      <div class="main-grid">
+        <!-- Panel Input -->
+        <section class="card">
+          <h2>1. Ukuran & Jumlah Jadi</h2>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="panjang">Panjang (cm)</label>
+              <input
+                type="number"
+                id="panjang"
+                placeholder="Ketik Panjang"
+                step="0.1"
+                min="0.1"
+              />
+            </div>
+            <div class="form-group">
+              <label for="lebar">Lebar (cm)</label>
+              <input
+                type="number"
+                id="lebar"
+                placeholder="Ketik Lebar"
+                step="0.1"
+                min="0.1"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="bleed">Bleed per Sisi (cm)</label>
+            <input
+              type="number"
+              id="bleed"
+              placeholder="Khusus Die / Kiss Cut tambahkan bleed 0.5 cm"
+              step="0.1"
+              min="0"
+            />
+            <span class="help-text"
+              >Ukuran + Bleed: <strong id="ukuranPotong">-</strong></span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="jumlahJadi">Total Target Ukuran Jadi (Pcs)</label>
+            <input
+              type="number"
+              id="jumlahJadi"
+              placeholder="Ketik jumlah yang dibutuhkan"
+              min="1"
+            />
+          </div>
+
+          <h2 style="margin-top: 24px">2. Biaya</h2>
+          <div class="form-group">
+            <label for="hargaLembar"
+              >Harga Cetak per Lembar 31 x 46 cm (Rp)</label
+            >
+            <input
+              type="number"
+              id="hargaLembar"
+              placeholder="Input harga sesuai jenis Kertas"
+              step="100"
+              min="0"
+            />
+          </div>
+          <div class="form-group">
+            <label for="biayaFinishing1">Biaya Finishing per Lembar (Rp)</label>
+            <input
+              type="number"
+              id="biayaFinishing1"
+              placeholder="Input harga Finishing 1"
+              step="100"
+              min="0"
+            />
+            <input
+              type="number"
+              id="biayaFinishing2"
+              placeholder="Input harga Finishing 1"
+              step="100"
+              min="0"
+            />
+          </div>
+
+          <!-- Tambahan Tombol Hapus -->
+          <button type="button" id="btnHapus" class="btn-reset">Hapus</button>
+        </section>
+
+        <!-- Panel Hasil & Analisis -->
+        <section class="card">
+          <h2>3. Hasil Imposisi (31 x 46 cm)</h2>
+
+          <div class="comparison-grid">
+            <div class="option-box" id="boxOpsiA">
+              <span class="badge" id="badgeA">Normal</span>
+              <div class="option-title">Opsi A (Panjang x Lebar)</div>
+              <div class="option-value" id="pcsA">0 pcs / lembar</div>
+              <div class="option-desc" id="layoutA">Layout: 0 x 0</div>
+            </div>
+
+            <div class="option-box" id="boxOpsiB">
+              <span class="badge" id="badgeB">Diputar</span>
+              <div class="option-title">Opsi B (Lebar x Panjang)</div>
+              <div class="option-value" id="pcsB">0 pcs / lembar</div>
+              <div class="option-desc" id="layoutB">Layout: 0 x 0</div>
+            </div>
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-title">Rekomendasi Paling Efisien</div>
+            <div class="summary-value" id="terbanyakValue">0 Pcs / Lembar</div>
+            <div class="summary-sub" id="terbanyakOpsi">Menggunakan Opsi -</div>
+
+            <div class="divider"></div>
+
+            <div class="summary-row">
+              <span>Kebutuhan Kertas:</span>
+              <strong id="totalLembar">0 Lembar</strong>
+            </div>
+            <div class="summary-row">
+              <span>Jumlah Biaya Cetak:</span>
+              <strong id="biayaCetak">Rp 0</strong>
+            </div>
+            <div class="summary-row">
+              <span>Jumlah Biaya Finishing:</span>
+              <strong id="biayaFinishingTotal">Rp 0</strong>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="summary-row">
+              <span>Estimasi Total Biaya:</span>
+              <strong id="totalBiaya">Rp 0</strong>
+            </div>
+
+            <div class="summary-row">
+              <span>PPN 11%:</span>
+              <strong id="biayaPPN">Rp 0</strong>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="summary-row total-row">
+              <span>Total Akhir (inc. PPN):</span>
+              <strong id="totalSetelahPPN" class="text-primary">Rp 0</strong>
+            </div>
+          </div>
+
+          <h2 style="margin-top: 20px">Visualisasi Layout</h2>
+          <div class="canvas-container">
+            <canvas id="canvasPreview" width="310" height="460"></canvas>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
